@@ -19,7 +19,7 @@ public class EmployeeService {
     EmployeeDao employeeDao;
 
     public ResponseEntity createEmployee(EmployeeDto employeeDto) throws Exception {
-        try{
+        try {
             Employee employee = new Employee();
             employee.setFirstName(employeeDto.getFirstName());
             employee.setLastName(employeeDto.getLastName());
@@ -30,74 +30,68 @@ public class EmployeeService {
 
             Employee savedEmployee = employeeDao.save(employee);
 
-            if (savedEmployee==null){
+            if (savedEmployee == null) {
                 throw new Exception("Error saving");
-            }
-            else {
+            } else {
                 return ResponseEntity.ok(savedEmployee);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
     public ResponseEntity getAllEmployee() throws Exception {
-        try{
+        try {
             List<Employee> employeeList = new ArrayList<>();
             employeeList = employeeDao.findAll();
 
             return ResponseEntity.ok(employeeList);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
     public ResponseEntity getEmployeeById(Integer id) throws Exception {
-        try{
+        try {
             Optional<Employee> optionalEmployee = employeeDao.findById(id);
-            if(optionalEmployee.isPresent()){
+            if (optionalEmployee.isPresent()) {
                 Employee employee = optionalEmployee.get();
                 return ResponseEntity.ok(employee);
-            }
-            else{
+            } else {
                 throw new Exception("Data not found for given id");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
     public ResponseEntity getEmployeeByName(String firstName) throws Exception {
-        try{
+        try {
             Optional<Employee> optionalEmployee = employeeDao.findByFirstName(firstName);
-            if(optionalEmployee.isPresent()){
+            if (optionalEmployee.isPresent()) {
                 Employee employee = optionalEmployee.get();
                 return ResponseEntity.ok(employee);
-            }
-            else{
+            } else {
                 throw new Exception("Data not found for given id");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
+    // update employee
     public ResponseEntity updateEmployee(EmployeeDto employeeDto) throws Exception {
-        try{
-            if(employeeDto.getEmpId()==null){
+        try {
+            if (employeeDto.getEmpId() == null) {
                 throw new Exception("Employee id not found");
             }
             Optional<Employee> optionalEmployee = employeeDao.findById(employeeDto.getEmpId());
 
-            if(optionalEmployee.isPresent()){
+            if (optionalEmployee.isPresent()) {
                 Employee employee = optionalEmployee.get();
                 employee.setFirstName(employeeDto.getFirstName());
                 employee.setLastName(employeeDto.getLastName());
@@ -108,35 +102,30 @@ public class EmployeeService {
 
                 Employee updatedEmployee = employeeDao.save(employee);
 
-                if(updatedEmployee==null){
+                if (updatedEmployee == null) {
                     throw new Exception("Error Saving");
-                }
-                else{
+                } else {
                     return ResponseEntity.ok(employee);
                 }
-            }
-            else{
+            } else {
                 throw new Exception("Data not found for given id");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
     public ResponseEntity deleteEmployeeById(Integer id) throws Exception {
-        try{
+        try {
             Optional<Employee> optionalEmployee = employeeDao.findById(id);
-            if(optionalEmployee.isPresent()){
+            if (optionalEmployee.isPresent()) {
                 employeeDao.deleteById(id);
                 return ResponseEntity.ok("Delete Success");
-            }
-            else{
+            } else {
                 throw new Exception("Data not found for given id");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new Exception(e.getMessage());
         }
