@@ -41,6 +41,7 @@ public class EmployeeService {
         }
     }
 
+    // get all employee
     public ResponseEntity getAllEmployee() throws Exception {
         try {
             List<Employee> employeeList = new ArrayList<>();
@@ -53,6 +54,7 @@ public class EmployeeService {
         }
     }
 
+    // get employee by id
     public ResponseEntity getEmployeeById(Integer id) throws Exception {
         try {
             Optional<Employee> optionalEmployee = employeeDao.findById(id);
@@ -68,6 +70,7 @@ public class EmployeeService {
         }
     }
 
+    // get employee by name
     public ResponseEntity getEmployeeByName(String firstName) throws Exception {
         try {
             Optional<Employee> optionalEmployee = employeeDao.findByFirstName(firstName);
